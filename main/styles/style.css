@@ -1,0 +1,275 @@
+/* General body styling */
+body {
+    font-family: 'Lato', Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #3A6591;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    margin: 0 8vw;
+}
+
+.logo img {
+    width: 4rem;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+}
+
+.nav-links .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.nav-links .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    border-bottom: solid black 1px;
+    margin: 0 1rem;
+}
+
+.nav-links .dropdown:hover .dropdown-content {
+    display: block;
+    border: solid black 1px;
+}
+
+.nav-links li:hover > a {
+    background-color: white;
+    opacity: 80%;
+    color: #3A6591;
+}
+
+.nav-links .dropdown:hover #dropdown {
+    display: none;
+}
+
+.nav-links .dropdown:hover #dropup {
+    display: inline;
+}
+
+.dropbtn:hover #dropdown {
+    display: none;
+}
+
+.dropbtn #dropup {
+    display: none;
+}
+
+.dropbtn:hover #dropup {
+    display:inline;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.icon {
+    display: flex;
+    color: white;
+    align-items: center;
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    width: fit-content;
+    z-index: 1;
+    border: black solid 1px;
+    margin-right: 0.5rem;
+}
+
+.mobile-menu a {
+    padding: 2vw;
+    color: black;
+    text-decoration: none;
+    border-bottom: black solid 1px;
+    margin: 0 1rem;
+}
+
+#hospitalization {
+    border-bottom: none;
+}
+
+@media (max-width: 1000px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .mobile-menu.active {
+        display: flex;
+    }
+}
+
+/* Map and Sidebar Styling */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px); /* Adjust height for header/footer spacing */
+    position: relative; /* Allow precise positioning of child elements */
+}
+#map {
+    height: 50%; /* On mobile, map takes half the height */
+}
+
+.sidebar {
+    flex: 0 0 300px; /* Sidebar fixed width */
+    background-color: #f8f9fa;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    order: 0; /* Sidebar comes first in layout */
+}
+/* Search container styling */
+#search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+#location-search, #distance-filter {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1), inset -1px -1px 3px rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+#location-search:focus, #distance-filter:focus {
+    border-color: #3A6591;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgba(58, 101, 145, 0.5);
+    outline: none;
+}
+.search-btn {
+    padding: 0.75rem 1.25rem;
+    background-color: #3A6591;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+.search-btn:hover {
+    background-color: #2d4f70;
+    transform: scale(1.05);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3), -3px -3px 8px rgba(255, 255, 255, 0.8);
+}
+
+#location-list {
+    margin-top: 10px;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+
+/* Location Item Styling */
+.location-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9em;
+}
+
+.location-item h3 {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #3A6591;
+}
+
+/* Footer styling */
+.twitterFooter {
+    display: flex;
+    width: 100%;
+    background-color: #3E90B0;
+    align-items: center;
+    justify-content: center;
+    padding: 2vw 0;
+}
+
+.twitterFooter img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyrightFooter {
+    display: flex;
+    width: 100%;
+    background-color: #B2BABD;
+    align-items: center;
+    justify-content: center;
+    padding: 2vw 0;
+}
+
+/* Footer Fix */
+footer {
+    position: relative; /* Ensure footer remains at the bottom of the page */
+    z-index: 1;
+}
+/* Desktop layout adjustments */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+        height: calc(100vh - 120px); /* Maintain total viewport usage */
+    }
+    .sidebar {
+        flex: 0 0 300px; /* Sidebar fixed width */
+        height: auto;
+        order: 0; /* Ensure sidebar stays on the left */
+    }
+    #map {
+        flex: 1; /* Map takes the remaining width */
+        height: auto;
+        order: 1; /* Map comes after sidebar */
+    }
+}
