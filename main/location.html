@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flu Vaccination Locations</title>
+  <link rel="stylesheet" href="./styles/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo"><a href="index.html"><img src='./images/RDE-logo.png' alt="rde logo" /></a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Vaccine Pages <span id="dropdown">&#9660;</span><span id="dropup">&#9650;</span></a>
+                    <div class="dropdown-content">
+                        <a href="location.html">Location</a>
+                        <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                        <a href="vaccine.html">Doses</a>
+                        <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div class="icon"><p>&#9776;</p></div>
+            </div>
+        </div>
+        <div class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="location.html">Location</a>
+            <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+            <a href="vaccine.html">Doses</a>
+            <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+        </div>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+          const mobileMenu = document.querySelector('.mobile-menu');
+          mobileMenu.classList.toggle('active');
+        }
+    </script>
+</header>
+
+  <div class="container">
+    <div id="map"></div>
+    <div class="sidebar">
+      <!-- Search Bar with Distance Filter -->
+      <div id="search-container">
+        <input type="text" id="location-search" placeholder="Search for locations">
+        <input type="number" id="distance-filter" placeholder="Filter location distance (miles)" min="1">
+        <button onclick="searchLocation()">Search</button>
+      </div>
+
+      <div id="location-list">
+        <!-- Locations will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="twitterFooter">
+      <a href="https://www.x.com/rdesystems"><img src="./images/twitterLogo.png" alt="Twitter Logo"></a>
+    </div>
+    <div class="copyrightFooter">
+      <p>&copy; 2024 RDE Systems, LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNA9OPKN3QfKRmnEoWKduVwP6eMKjO8iQ&callback=initMap" async defer></script>
+  <script>
+    function toggleMenu() {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      mobileMenu.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

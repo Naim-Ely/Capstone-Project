@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumulative Flu Doses Distributed by Year</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo"><a href="index.html"><img src='./images/RDE-logo.png' alt="rde logo" /></a></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Vaccine Pages &#9660;</a>
+                        <div class="dropdown-content">
+                            <a href="index.html">Home</a>
+                            <a href="location.html">Location</a>
+                            <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                            <a href="vaccine.html">Doses</a>
+                            <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div class="icon"><p>&#9776;</p></div>
+                </div>
+            </div>
+            <div class="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="location.html">Location</a>
+                <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                <a href="vaccine.html">Doses</a>
+                <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+            </div>
+        </nav>
+
+        <script>
+            function toggleMenu() {
+                const mobileMenu = document.querySelector('.mobile-menu');
+                mobileMenu.classList.toggle('active');
+            }
+        </script>
+    </header>
+
+    
+    <h3 style="text-align:center;">About the Flu</h3>
+    <p id="infoText">
+        Flu, also called influenza, is an infection of the nose, throat, and lungs, which are part of the respiratory system. The flu is caused by a virus. Influenza viruses are different from the "stomach flu" viruses that cause diarrhea and vomiting. Most people with the flu get better on their own.
+    </p>
+    <h3 style="text-align:center;">        About this Graph</h3>
+    <p id="infoText">
+        Explore interactive graphs showcasing the weekly distribution of flu vaccine doses for each year, based on data provided by the CDC. These visualizations highlight trends in vaccine distribution, enabling users to identify patterns, compare annual variations, and gain insights into how flu vaccination efforts evolve over time. Perfect for researchers, public health officials, and curious individuals looking to understand the dynamics of flu vaccine availability.
+    </p>
+
+    <div>
+        <label for="yearSelect">Select Year:</label>
+        <select id="yearSelect" onchange="showGraphForSelectedYear()">
+        </select>
+    </div>
+
+    <div id="chartsContainer"></div>
+
+    <footer>
+        <div class="twitterFooter">
+            <a href="https://www.x.com/rdesystems"><img src="./images/twitterLogo.png"></a>
+        </div>
+        <div class="copyrightFooter">
+            <p>Copyright &copy; 2024 RDE Systems, LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let allGraphs = {};
+
+        async function fetchVaccineData() {
+            try {
+                const response = await fetch('./getVaccineData.cfm');
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const data = await response.json();
+                console.log("Raw data fetched:", data);
+
+                const groupedData = {};
+                data.forEach(entry => {
+                    const year = entry.year_number;
+                    if (!groupedData[year]) {
+                        groupedData[year] = [];
+                    }
+                    groupedData[year].push(entry);
+                });
+
+                const yearSelect = document.getElementById('yearSelect');
+                for (const year in groupedData) {
+                    yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+                    allGraphs[year] = renderLineGraph(groupedData[year], year);
+                }
+
+                showGraphForSelectedYear(2018);
+            } catch (error) {
+                console.error('Error fetching vaccine data:', error);
+            }
+        }
+
+        function renderLineGraph(data, year) {
+    const canvas = document.createElement('canvas');
+    canvas.id = `lineChart${year}`;
+    canvas.className = 'chart-canvas';
+    document.getElementById('chartsContainer').appendChild(canvas);
+
+    const labels = data.map(entry => `Week: ${entry.week_number}`);
+    const values = data.map(entry => entry.cumulative_flu_doses_distributed);
+
+    const weekDates = data.map(entry => {
+        const startDate = new Date(entry.start_date);
+        const endDate = new Date(entry.end_date);
+        return `(${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()})`;
+    });
+
+    const myLineChart = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Flu Vaccine Doses Distributed (${year})`,
+                data: values,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 1,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const index = context.dataIndex;
+                            const doseCount = context.raw;
+                            const weekDateRange = weekDates[index];
+                            return `Doses: ${doseCount.toFixed(2)}M ${weekDateRange}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Flu Vaccine Doses Distributed (in millions)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Week'
+                    }
+                }
+            }
+        }
+    });
+
+    return canvas;
+}
+
+        function showGraphForSelectedYear() {
+            const selectedYear = document.getElementById('yearSelect').value;
+            const allCanvases = document.querySelectorAll('.chart-canvas');
+
+            allCanvases.forEach(canvas => {
+                canvas.style.display = 'none';
+            });
+
+            if (selectedYear && allGraphs[selectedYear]) {
+                allGraphs[selectedYear].style.display = 'block';
+            } else if (allGraphs[2018]) {
+                allGraphs[2018].style.display = 'block';
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        fetchVaccineData();
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.hamburger')) {
+                const dropdown = document.getElementById('dropdownMenu');
+                if (dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

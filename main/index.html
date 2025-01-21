@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RDE Capstone visualizing Influenza data">
+    <title>RDE Influenza Dashboard</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo"><a href="index.html"><img src='./images/RDE-logo.png' alt="rde logo" /></a></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Vaccine Pages <span id="dropdown">&#9660;</span><span id="dropup">&#9650;</span></a>
+                        <div class="dropdown-content">
+                            <a href="location.html">Location</a>
+                            <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                            <a href="vaccine.html">Doses</a>
+                            <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div class="icon"><p>&#9776;</p></div>
+                </div>
+            </div>
+            <div class="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="location.html">Location</a>
+                <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                <a href="vaccine.html">Doses</a>
+                <a href="hospitalizations.cfm" id="hospitalization">Hospitalizations</a>
+            </div>
+        </nav>
+
+        <script>
+            function toggleMenu() {
+                const mobileMenu = document.querySelector('.mobile-menu');
+                mobileMenu.classList.toggle('active');
+            }
+        </script>
+    </header>
+    <main style="padding-bottom:60px">
+        <section>
+            <div class="landingPage">
+                <h1>Welcome to the RDE Influenza Visualizer</h1>
+                <h3>Fall 2024 RDE Systems NJIT Capstone</h3>
+                <div class="landingText">
+                    <p>
+                        This project presents crucial data from the CDC regarding the Flu Vaccine, 
+                        aiming to provide clear insights into vaccination trends. 
+                        Developed by a team of seniors at the New Jersey Institute of 
+                        Technology, this platform is the amalgamation of their years of study 
+                        and hands-on experience in development. <br /><br />
+                        The goal is to make this data accessible and understandable 
+                        for all, from health professionals to the general public. By leveraging advanced 
+                        data visualization techniques, we aim to shed light on key vaccination metrics, 
+                        trends over time, and other relevant health data. <br /><br />
+                        This initiative has been made possible through collaboration with RDE Systems, 
+                        whose support has helped turn our vision into reality. Together, we are committed to contributing 
+                        to the ongoing conversation about public health and preventive care.      
+                    </p>
+                </div>
+            </div>
+    </section>
+    <section class="cards">
+        <div class="pageCards">
+            <div class="card">
+                <h1>View Vaccination Locations</h1>
+                <img src="images/map.png" alt="Map.png" class="cardimg" />
+                <p>Find vaccination locations in your area, along with business hours and more.</p>
+                <div class="cardPill">
+                    <a href="location.html">Locations</a>
+                </div>
+            </div>
+            <div class="card">
+                <h1>View Demographics</h1>
+                <img src="images/demographics.png" alt="Demographics.png" class="cardimg" />
+                <p>See the demographics of vaccination recipients, along with a heatmap of the United States.</p>
+                <div class="cardPill">
+                    <a href="demographics.cfm?dimensionType=Age&seasonSurveyYear=All&geographyType=All&month=All&season_survey_year=All">Demographics</a>
+                </div>
+            </div>
+            <div class="card">
+                <h1>View Dosages</h1>
+                <img src="images/dosage.webp" alt="Dosage.webp" class="cardimg" />
+                <p>Learn about the dosages each week with the flu vaccination.</p>
+                <div class="cardPill">
+                    <a href="#">Dosages</a>
+                </div>
+            </div>
+            <div class="card">
+                <h1>View Hospitalization Rates</h1>
+                <img src="images/hospitalization.webp" alt="Hospitalization.png" class="cardimg" />
+                <p>See visualizations regarding the hospitalization rates related to influenza.</p>
+                <div class="cardPill">
+                    <a href="#">Hospitalizations</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+    <footer>
+        <div class="twitterFooter">
+            <a href="https://www.x.com/rdesystems"><img src="./images/twitterLogo.png"></a>
+        </div>
+        <div class="copyrightFooter">
+            <p>Copyright &copy; 2024 RDE Systems, LLC. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
